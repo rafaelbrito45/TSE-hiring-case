@@ -1,0 +1,23 @@
+[
+    {"id": 101, "name": "Smart TV", "price": 899.00, "store_name": "ElectroMart"},
+    {"id": 102, "name": "iPhone 13", "price": 1099.99, "store_name": "GadgetWorld"},
+    {"id": 103, "name": "Espresso Machine", "price": 299.95, "store_name": "HomeGoods"},
+    {"id": 104, "name": "Running Shoes", "price": 89.95, "store_name": "SportsZone"},
+    {"id": 105, "name": "Gaming Laptop", "price": 1499.00, "store_name": "TechHaven"},
+    {"id": 106, "name": "Nintendo Switch", "price": 299.00, "store_name": "GameStop"},
+    {"id": 107, "name": "Mirrorless Camera", "price": 799.95, "store_name": "PhotoTech"},
+    {"id": 108, "name": "Noise-Canceling Headphones", "price": 249.99, "store_name": "AudioWorld"},
+    {"id": 109, "name": "French Door Refrigerator", "price": 1299.00, "store_name": "ApplianceCenter"},
+    {"id": 110, "name": "iPad Pro", "price": 799.99, "store_name": "MobileExpress"},
+    {"id": 111, "name": "Robot Vacuum", "price": 199.99, "store_name": "TechHaven"},
+    {"id": 112, "name": "Fitness Tracker", "price": 79.95, "store_name": "SportsZone"},
+    {"id": 113, "name": "Blender", "price": 49.99, "store_name": "HomeGoods"},
+    {"id": 114, "name": "Curved Gaming Monitor", "price": 599.99, "store_name": "TechHaven"},
+    {"id": 115, "name": "Air Fryer", "price": 79.99, "store_name": "ApplianceCenter"},
+    {"id": 116, "name": "Apple Watch Series 7", "price": 349.00, "store_name": "MobileExpress"},
+    {"id": 117, "name": "Drone with Camera", "price": 699.95, "store_name": "PhotoTech"},
+    {"id": 118, "name": "Upright Vacuum", "price": 139.99, "store_name": "HomeGoods"},
+    {"id": 119, "name": "Gaming Keyboard", "price": 79.00, "store_name": "GameStop"},
+    {"id": 120, "name": "Mini Refrigerator", "price": 99.00, "store_name": "ApplianceCenter"}
+  ]
+  
