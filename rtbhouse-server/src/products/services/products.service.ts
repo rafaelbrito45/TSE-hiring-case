@@ -1,8 +1,11 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Product } from '../interfaces/product.interface';
-import { ProductInfo } from '../interfaces/productInfo.interface';
-import { OrdersService } from 'src/orders/services/orders.service';
+import { OrdersService } from '../../orders/services/orders.service';
 import { createProductDto } from '../dto/create-product.dto';
+//import * as fs from 'fs';
+//import * as path from '../../../../data/products.json';
+
+//const filePath = path.resolve(__dirname, '../../../../data/products.json');
 
 @Injectable()
 export class ProductsService {
@@ -97,7 +100,7 @@ export class ProductsService {
   }
   //to do - make a function to poulate the result to do not repeat the code
 
-  findAll(): ProductInfo[] {
+  findAll(): Product[] {
     let results = [];
 
     this.products.map((product) => {
@@ -114,7 +117,7 @@ export class ProductsService {
     return results;
   }
   //to do - see if this is usable
-  findOneById(productId): ProductInfo[] {
+  findOneById(productId): Product[] {
     this.calculateTotalAmount(productId);
     let results = [];
 
@@ -131,15 +134,40 @@ export class ProductsService {
 
     return results;
   }
-
-  findByQuery(query: string): ProductInfo[] {
-    let results = [];
+  //to do - new interface for pagination
+  findByQuery(query: string) {
     const filteredResults = this.products.filter(
       (product) => product.name.toLowerCase().indexOf(query.toLowerCase()) > -1,
     );
 
-    filteredResults.map((product) => {
-      results.push({
+    const data = filteredResults.map((product: Product) => ({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      store_name: product.store_name,
+      totalAmount: this.calculateTotalAmount(product.id),
+      revenue: this.calculateTotalAmount(product.id) * product.price,
+    }));
+
+    return {
+      data,
+      currentPage: -1,
+    };
+  }
+  paginate({ itemsPerPage, currentPage }) {
+    const startIndex = (parseInt(currentPage) - 1) * parseInt(itemsPerPage);
+    const endIndex = startIndex + parseInt(itemsPerPage);
+
+    const totalPages = Math.ceil(this.products.length / parseInt(itemsPerPage));
+
+    console.log(totalPages);
+
+    const pageProducts = this.products.slice(startIndex, endIndex);
+
+    let data = [];
+
+    pageProducts.map((product) => {
+      data.push({
         id: product.id,
         name: product.name,
         price: product.price,
@@ -149,12 +177,16 @@ export class ProductsService {
       });
     });
 
-    return results;
+    return {
+      data,
+      currentPage: parseInt(currentPage),
+      totalPages,
+    };
   }
 
-  findOne(id: number): ProductInfo {
+  findOne(id: number): Product {
     const product = this.products.find((product) => product.id === id);
-
+    if (product === undefined) throw new Error('Product not found.');
     const result = {
       id: product.id,
       name: product.name,

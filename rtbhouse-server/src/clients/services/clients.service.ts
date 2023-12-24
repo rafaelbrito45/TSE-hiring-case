@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Client } from '../interfaces/client.interface';
 import { ClientOrder } from '../interfaces/clientOrder.interface';
-import { OrdersService } from 'src/orders/services/orders.service';
-import { ProductsService } from 'src/products/services/products.service';
+import { OrdersService } from '../../orders/services/orders.service';
+import { ProductsService } from '../../products/services/products.service';
 import { createClientDto } from '../dto/create-client.dto';
 
 @Injectable()
@@ -57,7 +57,9 @@ export class ClientsService {
     return response;
   }
   //to do - figure a way to filter by name and surname
-  findByQuery(query: string): Client[] {
+  //update to new format
+  //new interface
+  findByQuery(query: string) {
     let results = [];
     const filteredResults = this.clients.filter(
       (client) => client.name.toLowerCase().indexOf(query.toLowerCase()) > -1,
@@ -71,7 +73,35 @@ export class ClientsService {
       });
     });
 
-    return results;
+    return {
+      data: results,
+      currentPage: -1,
+    };
+  }
+
+  paginate({ itemsPerPage, currentPage }) {
+    const startIndex = (parseInt(currentPage) - 1) * parseInt(itemsPerPage);
+    const endIndex = startIndex + parseInt(itemsPerPage);
+
+    const totalPages = Math.ceil(this.clients.length / parseInt(itemsPerPage));
+
+    const pageClients = this.clients.slice(startIndex, endIndex);
+
+    let data = [];
+
+    pageClients.map((client) => {
+      data.push({
+        id: client.id,
+        name: client.name,
+        surname: client.surname,
+      });
+    });
+
+    return {
+      data,
+      currentPage: parseInt(currentPage),
+      totalPages,
+    };
   }
 
   createClient(clientData: createClientDto) {
